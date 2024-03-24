@@ -1,0 +1,48 @@
+// Creación del proyecto Laravel 10
+curl -s https://laravel.build/pos-system-api | bash
+
+// Descargamos Jetstream:
+sail composer require laravel/jetstream --dev
+
+// Instalación de dependencias NPM y migración de la Base de Datos
+npm install
+npm run build
+php artisan migrate
+
+// Creación de Migraciones
+sail php artisan make:migration create_local_table
+sail php artisan make:migration create_nums_phones_table
+
+// Creación de controlador para la subida de imagenes
+sail php artisan make:controller ImagenController
+
+// Creación de controlador para el CRUD de Usuarios
+sail php artisan make:controller UserController --resource
+/** ===================================================================================**/
+/** ROLES **/
+
+// Creación de la tabla "Roles"
+sail php artisan make:migration create_roles_table
+
+// Creación del modelo "Roles"
+sail php artisan make:model Roles
+
+// Creación de controlador para el CRUD de "Roles"
+sail php artisan make:controller RolesController --resource
+
+// Creación del seeder "Roles"
+sail php artisan make:seeder RolesTableSeeder
+// Ejecución del seeder "Roles"
+sail php artisan migrate --seed
+
+// Se agrega un nuevo campo en la tabla "users"
+sail php artisan make:migration add_role_id_to_users_table
+// Se genera la migración para crear el nuevo campo en la tabla "Users" en la base de datos
+sail php artisan migrate
+
+
+
+
+
+
+
