@@ -1,23 +1,24 @@
 <?php
 
-namespace App\Models\Product; // Se agregó la extensión "\Product" ya que el archivo se encuentra dentro del directorio "Product"
+namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Categories extends Model
+class Cryptos extends Model
 {
     use HasFactory;
-    use SoftDeletes; // Habilita la funcionalidad de eliminación suave
-
-    protected $table = 'categories';
 
     protected $fillable = [
         'name',
-        'image',
-        'icon'
+        'symbol',
+        'slug',
+        'description',
+        'website',
+        'technical_doc',
+        'source_code',
+        'logo'
     ];
 
     public function setCreatedAtAttribute($value){

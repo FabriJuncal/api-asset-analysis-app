@@ -63,7 +63,7 @@ class AuthController extends Controller
         $rules = [
             'email' => 'required|string|email|max:100',
             'password' => 'required|string',
-            'idTypeUser' => 'required|in:2'
+            'idTypeUser' => 'required|in:1'
         ];
         $validator = \Validator::make($request->input(), $rules);
         if ($validator->fails()) {

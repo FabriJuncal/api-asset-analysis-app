@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CryptosController;
 use App\Http\Controllers\ImagenController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserController;
@@ -40,6 +41,12 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('users/all',[UserController::class, 'index']);
     Route::put('users/update/{id}',[UserController::class, 'update']);
     Route::delete('users/delete/{id}',[UserController::class, 'destroy']);
+
+    /* ENDPOINTS PARA CRYPTOS*/
+    Route::post('cryptos/create',[CryptosController::class, 'store']);
+    Route::get('cryptos/all',[CryptosController::class, 'index']);
+    Route::put('cryptos/update/{id}',[CryptosController::class, 'update']);
+    Route::delete('cryptos/delete/{id}',[CryptosController::class, 'destroy']);
 
 
     // Endpoint que se encarga de subir las imagenes al servidor
