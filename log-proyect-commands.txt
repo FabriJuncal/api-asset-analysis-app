@@ -41,7 +41,7 @@ sail php artisan make:migration add_role_id_to_users_table
 sail php artisan migrate
 
 /** ===================================================================================**/
-/** ROLES **/
+/** CRYPTOS **/
 
 // Creación de la tabla "Cryptos"
 sail php artisan make:migration create_cryptos_table
@@ -57,10 +57,22 @@ sail php artisan make:seeder CryptosTableSeeder
 // Ejecución del seeder "Cryptos"
 sail php artisan migrate --seed
 
-// Se agrega un nuevo campo en la tabla "users"
-sail php artisan make:migration add_role_id_to_users_table
-// Se genera la migración para crear el nuevo campo en la tabla "Users" en la base de datos
-sail php artisan migrate
+/** ===================================================================================**/
+/** CRYPTOS PAIRS **/
+
+// Creación de la tabla "Cryptos Pairs"
+sail php artisan make:migration create_cryptos_pairs_table
+
+// Creación del modelo "Cryptos Pairs"
+sail php artisan make:model CryptosPairs
+
+// Creación de controlador para el CRUD de "Cryptos Pairs"
+sail php artisan make:controller CryptosPairsController --resource
+
+// Creación del seeder "Cryptos Pairs"
+sail php artisan make:seeder CryptosPairsTableSeeder
+// Ejecución del seeder "Cryptos Pairs"
+sail php artisan migrate --seed
 
 
 
