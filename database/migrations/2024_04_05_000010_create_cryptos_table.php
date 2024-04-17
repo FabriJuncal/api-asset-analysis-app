@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string('name', 100)->unique()->nullable(false);
             $table->string('symbol', 10)->unique()->nullable(false);
             $table->string('slug')->unique()->nullable(false);
-            $table->text('description');
-            $table->string('website', 255);
-            $table->mediumtext('technical_doc');
-            $table->string('source_code', 255);
+            $table->text('description')->nullable();
+            $table->string('website', 255)->nullable();
+            $table->string('technical_doc')->nullable();
+            $table->string('source_code')->nullable();
             $table->string('logo')->nullable(false);
             $table->timestamps();
 

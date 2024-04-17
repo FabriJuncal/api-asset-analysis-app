@@ -13,38 +13,46 @@ class CryptosPairsController extends Controller
      */
     public function index($crypto)
     {
-      try {
-        $cryptoPair = CryptosPairs::where(function ($query) use ($crypto) {
-          $query->whereHas('crypto1', function ($query) use ($crypto) {
-            $query->where('name', 'like', "%{$crypto}%")
-              ->orWhere('symbol', 'like', "%{$crypto}%");
-          })
-          ->orWhereHas('crypto2', function ($query) use ($crypto) {
-            $query->where('name', 'like', "%{$crypto}%")
-              ->orWhere('symbol', 'like', "%{$crypto}%");
-          });
-        })->firstOrFail(); // Devuelve un modelo o lanza una excepción si no se encuentra
+        // FALTA RETORNAR LA PLATAFORMA DE INVERSION DONDE SE ENCUENTRA LA CRIPTOMONEDA
+        try {
+            $cryptoPair = CryptosPairs::where(function ($query) use ($crypto) {
+              $query->whereHas('crypto1', function ($query) use ($crypto) {
+                $query->where('name', 'like', "%{$crypto}%")
+                  ->orWhere('symbol', 'like', "%{$crypto}%");
+              })
+              ->orWhereHas('crypto2', function ($query) use ($crypto) {
+                $query->where('name', 'like', "%{$crypto}%")
+                  ->orWhere('symbol', 'like', "%{$crypto}%");
+              });
+            })->get();
 
-        $symbol = $cryptoPair->crypto1->symbol . "/" . $cryptoPair->crypto2->symbol;
-        $logos = [
-          "Crypto1" => $cryptoPair->crypto1->logo,
-          "Crypto2" => $cryptoPair->crypto2->logo,
-        ];
+            if ($cryptoPair->isEmpty()) {
+              throw new ModelNotFoundException("NO SE ENCONTRÓ NINGÚN PAR CON LA CRIPTOMONEDA: $crypto");
+            }
 
-        return response()->json([
-          "total" => 1,
-          "cryptosPairs" => [
-            "symbol" => $symbol,
-            "logos" => $logos,
-          ],
-        ]);
-      } catch (ModelNotFoundException $e) {
-        return response()->json([
-          "total" => 0,
-          "cryptosPairs" => [],
-          "error" => "PAR DE CRIPTOMONEDAS NO ENCONTRADO",
-        ], 404); // Código de respuesta 404 (Not Found)
-      }
+            // Procesar los resultados obtenidos en $cryptoPair
+
+            return response()->json([
+              "total" => $cryptoPair->count(),
+              "cryptosPairs" => $cryptoPair->map(function ($pair) {
+                $symbol = $pair->crypto1->symbol . "/" . $pair->crypto2->symbol;
+                $logos = [
+                  "Crypto1" => $pair->crypto1->logo,
+                  "Crypto2" => $pair->crypto2->logo,
+                ];
+                return [
+                  "symbol" => $symbol,
+                  "logos" => $logos,
+                ];
+              })->toArray(),
+            ]);
+          } catch (ModelNotFoundException $e) {
+            return response()->json([
+              "total" => 0,
+              "cryptosPairs" => [],
+              "error" => $e->getMessage(),
+            ]);
+          }
     }
 
 

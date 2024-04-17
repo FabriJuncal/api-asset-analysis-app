@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         // Ejecuta los Seeders
         $this->call(RolesTableSeeder::class);
         $this->call(CryptosTableSeeder::class);
+        $this->call(InvestmentPlatformTableSeeder::class);
         $this->call(CryptosPairsTableSeeder::class);
 
         // \App\Models\User::factory(10)->create();

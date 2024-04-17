@@ -15,10 +15,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('crypto_id_1');
             $table->unsignedBigInteger('crypto_id_2');
+            $table->unsignedBigInteger('investment_platform_id');
             $table->timestamps();
 
-            $table->foreign('crypto_id_1')->references('id')->on('cryptos');
-            $table->foreign('crypto_id_2')->references('id')->on('cryptos');
+            $table->foreign('crypto_id_1')->references('id')->on('cryptos')->onDelete('cascade');
+            $table->foreign('crypto_id_2')->references('id')->on('cryptos')->onDelete('cascade');
+            $table->foreign('investment_platform_id')->references('id')->on('investment_platforms')->onDelete('cascade');
         });
     }
 

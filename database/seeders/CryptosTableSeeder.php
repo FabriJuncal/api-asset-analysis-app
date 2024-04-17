@@ -3,38 +3,50 @@
 namespace Database\Seeders;
 
 use App\Models\Cryptos;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use GuzzleHttp\Client;
 
 class CryptosTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run()
     {
-        Cryptos::firstOrCreate([
-            'name' => 'Bitcoin',
-            'symbol' => 'BTC',
-            'slug' => 'bitcoin',
-            'description' => 'Bitcoin (BTC) is a consensus network that enables a new payment system and a completely digital currency. Powered by its users, it is a peer to peer payment network that requires no central authority to operate. On October 31st, 2008, an individual or group of individuals operating under the pseudonym "Satoshi Nakamoto" published the Bitcoin Whitepaper and described it as: "a purely peer-to-peer version of electronic cash would allow online payments to be sent directly from one party to another without going through a financial institution."',
-            'website' => 'https://bitcoin.org/',
-            'technical_doc' => 'https://bitcoin.org/bitcoin.pdf',
-            'source_code' => 'https://github.com/bitcoin/',
-            'logo' => 'https://s2.coinmarketcap.com/static/img/coins/64x64/1.png',
+        $apiKey = '5ab25359-44d5-443f-8b7c-7856e95e34ee';
+
+        $client = new Client();
+        $response = $client->get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=3', [
+            'headers' => [
+                'X-CMC_PRO_API_KEY' => $apiKey,
+            ]
         ]);
 
-        Cryptos::firstOrCreate([
-            'name' => 'Ethereum',
-            'symbol' => 'ETH',
-            'slug' => 'ethereum',
-            'description' => 'Ethereum (ETH) is a smart contract platform that enables developers to build decentralized applications (dapps) conceptualized by Vitalik Buterin in 2013. ETH is the native currency for the Ethereum platform and also works as the transaction fees to miners on the Ethereum network.
+        $data = json_decode($response->getBody()->getContents(), true);
 
-            Ethereum is the pioneer for blockchain based smart contracts. When running on the blockchain a smart contract becomes like a self-operating computer program that automatically executes when specific conditions are met. On the blockchain, smart contracts allow for code to be run exactly as programmed without any possibility of downtime, censorship, fraud or third-party interference. It can facilitate the exchange of money, content, property, shares, or anything of value. The Ethereum network went live on July 30th, 2015 with 72 million Ethereum premined.',
-            'website' => 'https://www.ethereum.org/',
-            'technical_doc' => 'https://github.com/ethereum/wiki/wiki/White-Paper',
-            'source_code' => 'https://github.com/ethereum',
-            'logo' => 'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png',
-        ]);
+        $cryptos = [];
+        foreach ($data['data'] as $cryptoData) {
+            $cryptoID = strval($cryptoData['id']);
+
+            $response = $client->get('https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?id='. $cryptoID, [
+                'headers' => [
+                  'X-CMC_PRO_API_KEY' => $apiKey,
+                ]
+              ]);
+
+            $metaData = json_decode($response->getBody()->getContents(), true);
+            $metaData = $metaData['data'][$cryptoID];
+
+            Cryptos::firstOrCreate([
+                'name' => $metaData['name'],
+                'symbol' => $metaData['symbol'],
+                'slug' => $metaData['slug'],
+                'description' => $metaData['description'],
+                'website' => $metaData['urls']['website'][0],
+                'technical_doc' => isset($metaData['urls']['technical_doc'][0]) ? $metaData['urls']['technical_doc'][0] : null,
+                'source_code' => isset($metaData['urls']['source_code'][0]) ? $metaData['urls']['source_code'][0] : null,
+                'logo' => $metaData['logo'],
+            ]);
+        }
     }
 }
