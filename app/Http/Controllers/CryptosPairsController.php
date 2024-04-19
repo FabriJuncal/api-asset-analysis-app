@@ -15,7 +15,7 @@ class CryptosPairsController extends Controller
     {
         // FALTA RETORNAR LA PLATAFORMA DE INVERSION DONDE SE ENCUENTRA LA CRIPTOMONEDA
         try {
-            $cryptoPair = CryptosPairs::where(function ($query) use ($crypto) {
+            $cryptoPair = CryptosPairs::with('crypto1', 'crypto2', 'investmentPlatform')->where(function ($query) use ($crypto) {
               $query->whereHas('crypto1', function ($query) use ($crypto) {
                 $query->where('name', 'like', "%{$crypto}%")
                   ->orWhere('symbol', 'like', "%{$crypto}%");
@@ -35,14 +35,22 @@ class CryptosPairsController extends Controller
             return response()->json([
               "total" => $cryptoPair->count(),
               "cryptosPairs" => $cryptoPair->map(function ($pair) {
-                $symbol = $pair->crypto1->symbol . "/" . $pair->crypto2->symbol;
+                $symbols = $pair->crypto1->symbol . "/" . $pair->crypto2->symbol;
+                $names = $pair->crypto1->name . " / " . $pair->crypto2->name;
                 $logos = [
                   "Crypto1" => $pair->crypto1->logo,
                   "Crypto2" => $pair->crypto2->logo,
                 ];
+                $investmentPlatform = [
+                    "name" => $pair->investmentPlatform->name,
+                    "logo" => $pair->investmentPlatform->logo
+                ];
                 return [
-                  "symbol" => $symbol,
+                  "symbols" => $symbols,
+                  "names" => $names,
                   "logos" => $logos,
+                  "investmentPlatform" => $investmentPlatform
+
                 ];
               })->toArray(),
             ]);

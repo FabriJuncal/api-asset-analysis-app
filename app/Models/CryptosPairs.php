@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 class CryptosPairs extends Model
 {
@@ -18,4 +20,10 @@ class CryptosPairs extends Model
     {
         return $this->belongsTo(Cryptos::class, 'crypto_id_2');
     }
+
+    public function investmentPlatform()
+    {
+        return $this->belongsTo(InvestmentPlatform::class, 'investment_platform_id');
+    }
+
 }

@@ -16,7 +16,7 @@ class CryptosTableSeeder extends Seeder
         $apiKey = '5ab25359-44d5-443f-8b7c-7856e95e34ee';
 
         $client = new Client();
-        $response = $client->get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=3', [
+        $response = $client->get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=10', [
             'headers' => [
                 'X-CMC_PRO_API_KEY' => $apiKey,
             ]

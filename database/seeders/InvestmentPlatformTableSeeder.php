@@ -17,134 +17,110 @@ class InvestmentPlatformTableSeeder extends Seeder
                 'name' => 'Binance',
                 'type' => 'crypto',
                 'website' => 'https://www.binance.com/',
-                'logo' => 'https://www.binance.com/en/static/latest/img/binance-logo.svg',
+                'logo' => 'https://s2.coinmarketcap.com/static/img/exchanges/64x64/270.png',
             ],
             [
                 'name' => 'Coinbase',
                 'type' => 'crypto',
-                'website' => 'https://www.coinbase.com/',
-                'logo' => 'https://www.coinbase.com/en/logo',
-            ],
-            [
-                'name' => 'Kraken',
-                'type' => 'crypto',
-                'website' => 'https://www.kraken.com/',
-                'logo' => 'https://www.kraken.com/assets/1648730481/kraken-logo.svg',
-            ],
-            [
-                'name' => 'eToro',
-                'type' => 'crypto',
-                'website' => 'https://www.etoro.com/',
-                'logo' => 'https://www.etoro.com/en-us/static/common/images/logo.svg',
-            ],
-            [
-                'name' => 'FTX',
-                'type' => 'crypto',
-                'website' => 'https://ftx.com/',
-                'logo' => 'https://ftx.com/static/media/logo.svg',
-            ],
-            [
-                'name' => 'Huobi Global',
-                'type' => 'crypto',
-                'website' => 'https://www.huobi.com/en/',
-                'logo' => 'https://www.huobi.com/static/img/nav/logo.png',
-            ],
-            [
-                'name' => 'OKX',
-                'type' => 'crypto',
-                'website' => 'https://www.okx.com/',
-                'logo' => 'https://www.okx.com/static/imgs/okx-logo.svg',
+                'website' => 'https://exchange.coinbase.com',
+                'logo' => 'https://s2.coinmarketcap.com/static/img/exchanges/64x64/89.png',
             ],
             [
                 'name' => 'Bybit',
                 'type' => 'crypto',
                 'website' => 'https://www.bybit.com/',
-                'logo' => 'https://www.bybit.com/static/img/logo.svg',
+                'logo' => 'https://s2.coinmarketcap.com/static/img/exchanges/64x64/521.png',
             ],
             [
-                'name' => 'Crypto.com',
+                'name' => 'OKX',
                 'type' => 'crypto',
-                'website' => 'https://crypto.com/',
-                'logo' => 'https://crypto.com/static/image/usdc_swap/logo_crypto-com.svg',
+                'website' => 'https://www.okx.com/',
+                'logo' => 'https://s2.coinmarketcap.com/static/img/exchanges/64x64/294.png',
             ],
             [
-                'name' => 'Bitfinex',
+                'name' => 'Upbit',
                 'type' => 'crypto',
-                'website' => 'https://www.bitfinex.com/',
-                'logo' => 'https://www.bitfinex.com/assets/img/logo.svg',
+                'website' => 'https://upbit.com/',
+                'logo' => 'https://s2.coinmarketcap.com/static/img/exchanges/64x64/351.png',
             ],
             [
-                'name' => 'Gate.io',
+                'name' => 'Kraken',
                 'type' => 'crypto',
-                'website' => 'https://www.gate.io/',
-                'logo' => 'https://www.gate.io/images/logo.svg',
+                'website' => 'https://www.kraken.com/',
+                'logo' => 'https://s2.coinmarketcap.com/static/img/exchanges/64x64/24.png',
             ],
             [
                 'name' => 'KuCoin',
                 'type' => 'crypto',
                 'website' => 'https://www.kucoin.com/',
-                'logo' => 'https://www.kucoin.com/static/img/logo.png',
+                'logo' => 'https://s2.coinmarketcap.com/static/img/exchanges/64x64/311.png',
             ],
             [
-                'name' => 'Bittrex',
+                'name' => 'Gate.io',
                 'type' => 'crypto',
-                'website' => 'https://www.bittrex.com/',
-                'logo' => 'https://bittrex.com/static/img/logonew.svg'
+                'website' => 'https://www.gate.io/',
+                'logo' => 'https://s2.coinmarketcap.com/static/img/exchanges/64x64/302.png',
             ],
             [
-                'name' => 'Poloniex',
+                'name' => 'HTX',
                 'type' => 'crypto',
-                'website' => 'https://poloniex.com/',
-                'logo' => 'https://poloniex.com/img/poloniex.svg'
+                'website' => 'https://www.htx.com/',
+                'logo' => 'https://s2.coinmarketcap.com/static/img/exchanges/64x64/102.png',
             ],
             [
-                'name' => 'HitBTC',
+                'name' => 'Bitfinex',
                 'type' => 'crypto',
-                'website' => 'https://hitbtc.com/',
-                'logo' => 'https://hitbtc.com/images/logo.svg'
+                'website' => 'https://www.bitfinex.com/',
+                'logo' => 'https://s2.coinmarketcap.com/static/img/exchanges/64x64/37.png',
+            ],
+            [
+                'name' => 'MEXC',
+                'type' => 'crypto',
+                'website' => 'https://www.mexc.com/',
+                'logo' => 'https://s2.coinmarketcap.com/static/img/exchanges/64x64/544.png',
+            ],
+            [
+                'name' => 'Bitget',
+                'type' => 'crypto',
+                'website' => 'https://www.bitget.com/',
+                'logo' => 'https://s2.coinmarketcap.com/static/img/exchanges/64x64/513.png',
             ],
             [
                 'name' => 'Bitstamp',
                 'type' => 'crypto',
                 'website' => 'https://www.bitstamp.net/',
-                'logo' => 'https://www.bitstamp.net/img/logos/bitstamp-logo-black.svg'
+                'logo' => 'https://s2.coinmarketcap.com/static/img/exchanges/64x64/70.png'
+            ],
+            [
+                'name' => 'Crypto.com',
+                'type' => 'crypto',
+                'website' => 'https://crypto.com/exchange/',
+                'logo' => 'https://s2.coinmarketcap.com/static/img/exchanges/64x64/1149.png',
             ],
             [
                 'name' => 'Gemini',
                 'type' => 'crypto',
                 'website' => 'https://www.gemini.com/',
-                'logo' => 'https://www.gemini.com/static/logos/gemini-logo.svg'
+                'logo' => 'https://s2.coinmarketcap.com/static/img/exchanges/64x64/151.png'
             ],
             [
-                'name' => 'BMEX',
-                'type' => 'derivatives',
-                'website' => 'https://bmex.com/',
-                'logo' => 'https://bmex.com/images/bmex_logo_white.svg'
-            ],
-            [
-                'name' => 'Deribit',
-                'type' => 'derivatives',
-                'website' => 'https://deribit.com/',
-                'logo' => 'https://deribit.com/images/deribit-logo.svg'
-            ],
-            [
-                'name' => 'BitFlyer',
+                'name' => 'BingX',
                 'type' => 'crypto',
-                'website' => 'https://bitflyer.com/en/',
-                'logo' => 'https://bitflyer.com/en/assets/images/logo.svg'
+                'website' => 'https://bingx.com/en-us/',
+                'logo' => 'https://s2.coinmarketcap.com/static/img/exchanges/64x64/1064.png'
             ],
             [
-                'name' => 'Liquid',
+                'name' => 'XT.COM',
                 'type' => 'crypto',
-                'website' => 'https://liquid.com/',
-                'logo' => 'https://liquid.com/assets/img/logo_white.svg'
+                'website' => 'https://www.xt.com/en',
+                'logo' => 'https://s2.coinmarketcap.com/static/img/exchanges/64x64/525.png'
             ],
             [
-                'name' => 'Bakkt',
-                'type' => 'digital assets',
-                'website' => 'https://bakkt.com/',
-                'logo' => 'https://bakkt.com/wp-content/uploads/2021/06/bakkt-logo-white.svg'
-            ]
+                'name' => 'Deepcoin',
+                'type' => 'crypto',
+                'website' => 'https://www.deepcoin.com/cmc',
+                'logo' => 'https://s2.coinmarketcap.com/static/img/exchanges/64x64/1182.png'
+            ],
         ];
 
         foreach ($platformsData as $platformData) {

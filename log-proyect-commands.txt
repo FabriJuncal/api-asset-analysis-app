@@ -89,7 +89,7 @@ sail php artisan make:controller InvestmentPlatformController --resource
 // Creación del seeder "Investment Platform"
 sail php artisan make:seeder InvestmentPlatformTableSeeder
 // Ejecución del seeder "Investment Platform"
-sail php artisan migrate --seed
+sail php artisan migrate:fresh --seed
 
 
 
