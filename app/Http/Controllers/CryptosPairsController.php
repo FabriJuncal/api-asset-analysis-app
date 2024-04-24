@@ -38,8 +38,8 @@ class CryptosPairsController extends Controller
                 $symbols = $pair->crypto1->symbol . "/" . $pair->crypto2->symbol;
                 $names = $pair->crypto1->name . " / " . $pair->crypto2->name;
                 $logos = [
-                  "Crypto1" => $pair->crypto1->logo,
-                  "Crypto2" => $pair->crypto2->logo,
+                  "asset1" => $pair->crypto1->logo,
+                  "asset2" => $pair->crypto2->logo,
                 ];
                 $investmentPlatform = [
                     "name" => $pair->investmentPlatform->name,
