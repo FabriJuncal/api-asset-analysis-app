@@ -35,6 +35,7 @@ class CryptosPairsController extends Controller
             return response()->json([
               "total" => $cryptoPair->count(),
               "cryptosPairs" => $cryptoPair->map(function ($pair) {
+                $id = $pair->id;
                 $symbols = $pair->crypto1->symbol . "/" . $pair->crypto2->symbol;
                 $names = $pair->crypto1->name . " / " . $pair->crypto2->name;
                 $logos = [
@@ -45,11 +46,15 @@ class CryptosPairsController extends Controller
                     "name" => $pair->investmentPlatform->name,
                     "logo" => $pair->investmentPlatform->logo
                 ];
+                $filterTradingView = strtoupper($pair->investmentPlatform->name) . ":" . $pair->crypto1->symbol . $pair->crypto2->symbol;
+
                 return [
+                  "id" => $id,
                   "symbols" => $symbols,
                   "names" => $names,
                   "logos" => $logos,
-                  "investmentPlatform" => $investmentPlatform
+                  "investmentPlatform" => $investmentPlatform,
+                  "filterTradingView" => $filterTradingView
 
                 ];
               })->toArray(),
