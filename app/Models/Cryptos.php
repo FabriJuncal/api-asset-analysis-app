@@ -21,6 +21,11 @@ class Cryptos extends Model
         'logo'
     ];
 
+    public function cryptoTags()
+    {
+        return $this->hasMany(CryptosTags::class, 'crypto_id');
+    }
+
     public function setCreatedAtAttribute($value){
         // date_default_timezone_set("America/Lima"); // Esta configuración afecta a toda la aplicación
         $this->attributes['created_at'] = Carbon::now('America/Argentina/Buenos_Aires'); // Esta configuración solo afecta a esta perte del código

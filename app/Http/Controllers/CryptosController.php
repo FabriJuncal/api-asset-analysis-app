@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cryptos;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CryptosController extends Controller
 {
@@ -12,14 +13,69 @@ class CryptosController extends Controller
      */
     public function index(Request $request)
     {
-
+        // 1. Extraer términos de búsqueda
         $search = $request->search;
-        $cryptos = Cryptos::where('name', 'like', '%'.$search.'%')->paginate(20);
 
-        return response()->json([
-            "total" => $cryptos->total(),
-            "cryptos" => $cryptos,
-        ]);
+        // 2. Crear consulta base
+        $query = Cryptos::query();
+
+        // 3. Aplicar filtro de búsqueda (si se proporciona)
+        if ($search) {
+            $query->where('name', 'like', "%{$search}%")
+                ->orWhere('symbol', 'like', "%{$search}%");
+        }
+
+        // 4. Excluir cryptomonedas con tag "stablecoin"
+        $query->whereDoesntHave('cryptoTags', function ($subQuery) {
+            $subQuery->where('tags', 'stablecoin');
+        });
+
+        // 5. Incluir relación con CryptosTags (eager loading)
+        // $query->with('cryptoTags');
+
+        try {
+            // 6. Paginar resultados
+            $cryptos = $query->paginate(20);
+
+            // 7. Verificar si hay resultados
+            if ($cryptos->isEmpty()) {
+                throw new ModelNotFoundException("NO SE ENCONTRARON RESULTADOS PARA LA CRIPTOMONEDA: $search");
+            }
+
+            // 8. Devolver respuesta JSON
+            return response()->json($cryptos);
+
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+              "total" => 0,
+              "cryptos" => [],
+              "error" => $e->getMessage(),
+            ]);
+          }
+    }
+
+    public function getCryptos($crypto)
+    {
+        try {
+            $cryptos = Cryptos::where('name', 'like', '%'.$crypto.'%')
+            ->orWhere('symbol', 'like', '%'.$crypto.'%')->get();
+
+            if ($cryptos->isEmpty()) {
+                throw new ModelNotFoundException("NO SE ENCONTRARON RESULTADOS PARA LA CRIPTOMONEDA: $crypto");
+            }
+
+            return response()->json([
+                "total" => $cryptos->count(),
+                "cryptos" => $cryptos,
+            ]);
+
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+              "total" => 0,
+              "cryptos" => [],
+              "error" => $e->getMessage(),
+            ]);
+          }
     }
 
     /**

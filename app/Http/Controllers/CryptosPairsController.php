@@ -13,7 +13,7 @@ class CryptosPairsController extends Controller
      */
     public function index($crypto)
     {
-        // FALTA RETORNAR LA PLATAFORMA DE INVERSION DONDE SE ENCUENTRA LA CRIPTOMONEDA
+
         try {
             $cryptoPair = CryptosPairs::with('crypto1', 'crypto2', 'investmentPlatform')->where(function ($query) use ($crypto) {
               $query->whereHas('crypto1', function ($query) use ($crypto) {

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Cryptos;
+use App\Models\CryptosTags;
 use Illuminate\Database\Seeder;
 use GuzzleHttp\Client;
 
@@ -16,7 +17,7 @@ class CryptosTableSeeder extends Seeder
         $apiKey = '5ab25359-44d5-443f-8b7c-7856e95e34ee';
 
         $client = new Client();
-        $response = $client->get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=10', [
+        $response = $client->get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=20', [
             'headers' => [
                 'X-CMC_PRO_API_KEY' => $apiKey,
             ]
@@ -24,7 +25,6 @@ class CryptosTableSeeder extends Seeder
 
         $data = json_decode($response->getBody()->getContents(), true);
 
-        $cryptos = [];
         foreach ($data['data'] as $cryptoData) {
             $cryptoID = strval($cryptoData['id']);
 
@@ -37,7 +37,7 @@ class CryptosTableSeeder extends Seeder
             $metaData = json_decode($response->getBody()->getContents(), true);
             $metaData = $metaData['data'][$cryptoID];
 
-            Cryptos::firstOrCreate([
+            $crypto = Cryptos::firstOrCreate([
                 'name' => $metaData['name'],
                 'symbol' => $metaData['symbol'],
                 'slug' => $metaData['slug'],
@@ -47,6 +47,13 @@ class CryptosTableSeeder extends Seeder
                 'source_code' => isset($metaData['urls']['source_code'][0]) ? $metaData['urls']['source_code'][0] : null,
                 'logo' => $metaData['logo'],
             ]);
+
+            foreach ($cryptoData['tags'] as $tag) {
+                CryptosTags::firstOrCreate([
+                    'crypto_id' => $crypto->id,
+                    'tags' => $tag
+                ]);
+            }
         }
     }
 }

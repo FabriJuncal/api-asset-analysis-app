@@ -58,6 +58,18 @@ sail php artisan make:seeder CryptosTableSeeder
 sail php artisan migrate --seed
 
 /** ===================================================================================**/
+/** CRYPTOS TAGS **/
+
+// Creación de la tabla "Cryptos"
+sail php artisan make:migration create_cryptos_tags_table
+
+// Creación del modelo "Cryptos Tags"
+sail php artisan make:model CryptosTags
+
+// Creación del seeder "Cryptos Tags"
+sail php artisan make:seeder CryptosTagsTableSeeder
+
+/** ===================================================================================**/
 /** CRYPTOS PAIRS **/
 
 // Creación de la tabla "Cryptos Pairs"
