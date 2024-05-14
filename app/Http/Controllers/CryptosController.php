@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cryptos;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\DB;
 
 class CryptosController extends Controller
 {
@@ -54,16 +55,36 @@ class CryptosController extends Controller
           }
     }
 
-    public function getCryptos($crypto)
+    public function getCryptos(Request $request)
     {
-        try {
-            $cryptos = Cryptos::where('name', 'like', '%'.$crypto.'%')
-            ->orWhere('symbol', 'like', '%'.$crypto.'%')->get();
 
+        // 1. Extraer términos de búsqueda
+        $search = $request->search;
+
+        try {
+            // 2. Construcción de la consulta Eloquent:
+            $cryptos = Cryptos::select('cryptos.*')
+            // Se excluye las Stablecoins
+            ->leftJoin('cryptos_tags as ct', function ($join) {
+                $join->on('cryptos.id', '=', 'ct.crypto_id')
+                    //  Se ha utilizado \DB::raw() para especificar la cadena 'stablecoin'
+                    //  como una expresión SQL directa, ya que es un valor constante y no necesita ser parametrizado.
+                    ->on('ct.tags', '=', DB::raw("'stablecoin'"));
+            })
+            ->where(function ($query) use ($search) {
+                $query->where('cryptos.name', 'like', '%' . $search . '%')
+                    ->orWhere('cryptos.symbol', 'like', '%' . $search . '%');
+            })
+            ->whereNull('ct.crypto_id')
+            ->paginate(20);
+
+            // 3. Manejo de resultados vacíos:
             if ($cryptos->isEmpty()) {
-                throw new ModelNotFoundException("NO SE ENCONTRARON RESULTADOS PARA LA CRIPTOMONEDA: $crypto");
+                throw new ModelNotFoundException("NO SE ENCONTRARON RESULTADOS PARA LA CRIPTOMONEDA: $search");
             }
 
+
+            // 4. Devolución de la respuesta JSON:
             return response()->json([
                 "total" => $cryptos->count(),
                 "cryptos" => $cryptos,

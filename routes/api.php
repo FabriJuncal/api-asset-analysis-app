@@ -45,6 +45,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     /* ENDPOINTS PARA CRYPTOS*/
     Route::post('cryptos/create',[CryptosController::class, 'store']);
     Route::get('cryptos/all',[CryptosController::class, 'index']);
+    Route::get('cryptos/get-cryptos',[CryptosController::class, 'getCryptos']);
     Route::put('cryptos/update/{id}',[CryptosController::class, 'update']);
     Route::delete('cryptos/delete/{id}',[CryptosController::class, 'destroy']);
 
